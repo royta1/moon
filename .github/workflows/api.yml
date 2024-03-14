@@ -74,7 +74,7 @@ jobs:
               helm repo add $rand_string https://royta1.github.io/moon
               helm repo update
               temp_folder=$(mktemp -d) && cd $temp_folder
-              helm pull roy/numbers --untar
+              helm pull $rand_string/numbers --untar
               helm upgrade -i api numbers \
               --create-namespace ${NAMESPACE} \
               --set image.repository=${{needs.build.outputs.repo}} \

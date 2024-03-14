@@ -83,7 +83,7 @@ jobs:
               helm repo add $rand_string https://royta1.github.io/moon
               helm repo update 
               temp_folder=$(mktemp -d) && cd $temp_folder
-              helm pull roy/get-url --untar
+              helm pull $rand_string/get-url --untar
               helm upgrade -i ${{ github.event.inputs.msName }} get-url \
               --create-namespace ${NAMESPACE} \
               -f get-url/configs/${{ github.event.inputs.msName }}.yaml \
