@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       imageTag: ${{ steps.imageTag.outputs.tag }}
-      repo: ${{ steps.imageTag.outputs.tag }}
+      repo: ${{ steps.repo.outputs.repo }}
     steps:
       - name: variable
         run: |
