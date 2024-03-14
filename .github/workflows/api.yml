@@ -74,7 +74,7 @@ jobs:
               helm repo update --force
               temp_folder=$(mktemp -d) && cd $temp_folder
               helm pull roy/api --untar
-              helm upgrade -i ${{ github.event.inputs.msName }} api \
+              helm upgrade -i api numbers \
               --create-namespace ${NAMESPACE} \
               --set image.repository=${{needs.build.outputs.repo}} \
               --set image.tag=${{needs.build.outputs.imageTag}} \
