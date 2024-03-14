@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       imageTag: ${{ steps.imageTag.outputs.tag }}
-      repo: ${{ steps.imageTag.outputs.tag }}
+      repo: ${{ steps.repo.outputs.repo }}
     steps:
       - name: variable
         run: |
@@ -87,6 +87,7 @@ jobs:
               helm upgrade -i ${{ github.event.inputs.msName }} get-url \
               --create-namespace ${NAMESPACE} \
               -f get-url/configs/${{ github.event.inputs.msName }}.yaml \
+              --set image.repository=${{needs.build.outputs.repo}} \
               --set image.tag=${{needs.build.outputs.imageTag}} \
               --set fullnameOverride=${{ github.event.inputs.msName }}
               rm -rf $temp_folder
