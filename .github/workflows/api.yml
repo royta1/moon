@@ -73,7 +73,7 @@ jobs:
               helm repo add roy https://royta1.github.io/moon
               helm repo update --force
               temp_folder=$(mktemp -d) && cd $temp_folder
-              helm pull roy/api --untar
+              helm pull roy/numbers --untar
               helm upgrade -i api numbers \
               --create-namespace ${NAMESPACE} \
               --set image.repository=${{needs.build.outputs.repo}} \
