@@ -79,7 +79,8 @@ jobs:
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
-              helm repo add roy https://royta1.github.io/moon
+              rand_string=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 13; echo)
+              helm repo add $rand_string https://royta1.github.io/moon
               helm repo update 
               temp_folder=$(mktemp -d) && cd $temp_folder
               helm pull roy/get-url --untar
@@ -89,6 +90,7 @@ jobs:
               --set image.tag=${{needs.build.outputs.imageTag}} \
               --set fullnameOverride=${{ github.event.inputs.msName }}
               rm -rf $temp_folder
+              helm repo rm $rand_string
               '
   
   tests:
