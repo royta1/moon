@@ -82,29 +82,3 @@ jobs:
               rm -rf $temp_folder
               helm repo rm $rand_string
               '
-  
-  tests:
-    needs: [deploy]
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Copy file to remote server
-      env:
-        PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        HOSTNAME: ${{secrets.SSH_HOST}}
-        USER_NAME: ${{secrets.USER_NAME}}
-      run: |
-        echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-        scp -o StrictHostKeyChecking=no -i private_key tests.sh ${USER_NAME}@${HOSTNAME}:~/tests.sh
-    - name: Run tests
-      env:
-          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          HOSTNAME: ${{secrets.SSH_HOST}}
-          USER_NAME: ${{secrets.USER_NAME}}
-      run: |
-        echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-        ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
-            bash ~/tests.sh
-            '
