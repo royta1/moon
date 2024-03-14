@@ -1,0 +1,12 @@
+{{- if .Values.envVariables }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "get-url.fullname" . }}
+  labels:
+    {{- include "get-url.labels" . | nindent 4 }}
+data:
+{{- range $key, $value := $.Values.envVariables }}
+  {{ $key }}: {{ $value | quote }}
+{{- end }}
+{{- end }}
